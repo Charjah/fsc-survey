@@ -164,20 +164,32 @@ h1 {
 
 /* Keep header above rows */
 .tablehead.likert-head {
-  position: sticky;
-  top: 0;
-  z-index: 5;
-  background: var(--soft);
+  display: grid;
+ grid-template-columns: minmax(260px, 1fr) 420px;
+ grid-template-rows: auto auto;
 }
 
 /* Because the sticky question cell is white, keep header question cell consistent */
 .tablehead.likert-head .th-q {
   background: var(--soft);
+  grid-column: 1;
+  grid-row: 1;
 }
 
 /* Add a subtle divider shadow so the sticky column looks intentional */
 .qtext {
   box-shadow: 8px 0 12px rgba(0,0,0,.06);
+}
+
+.tablehead.likert-head .likert-labels {
+  grid-column: 2;   /* put labels under ANSWERS */
+  grid-row: 2;
+}
+
+.tablehead.likert-head .th-a {
+  grid-column: 2;
+  grid-row: 1;
+  text-align: center;
 }
 
 .likert-labels {
@@ -210,7 +222,7 @@ h1 {
 
 .qrow {
     display: grid;
-    grid-template-columns: 1fr 320px;
+    grid-template-columns: minmax(260px, 1fr) 420px;
     gap: 12px;
     padding: 12px 12px;
     border-bottom: 1px solid #eef2f7;
@@ -319,29 +331,54 @@ h1 {
     margin: 20px;
 }
 
+/* ===== NEW WRAPPERS ===== */
+.choicegrid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    align-items: center;
+    justify-items: center;
+}
+
+/* Mini lables (hiiden by default = desktop) */
+.mobile-scale {
+    display: none;
+}
+
+.mobile-scale.yesno {
+    grid-template-columns: repeat(2, 1fr);
+}
+
 /* ===== MEDIA QUERIES ===== */
 
-@media (max-width:760px)
-{
-    .likert-head {
-        grid-template-columns: 1fr;
-    }
-    .likert-lables {
-        grid-template-columns: repeat(5, 1fr);
-    }
-    .qrow  {
-        grid-template-columns: minmax(260px, 1fr) 420px;
-    }
-    .qchoices {
-        grid-template-columns: repeat(5, 1fr);
-    }
-  .meta {
-    grid-template-columns:1fr 1fr
-    }
-    h1 {
-        font-size:26px
-    }
-    .tablehead{ 
-        grid-template-columns: minmax(260px, 1fr) 420px; 
-    }
+@media (max-width:760px) {
+  .tablehead.likert-head, .th-a {
+    display: none
+  }
+    .qrow {
+    grid-template-columns: 1fr;
+  }
+  .qanswers{
+    margin-top: 6px;
+  }
+ .mobile-scale {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    text-align: center;
+    font-size: 11px;
+    font-weight: 800;
+    margin: 6px 0 8px;
+ }
+
+  /* answers become a normal block on mobile */
+  .qchoices {
+    grid-template-columns: repeat(5, 1fr);
+    justify-items: center;
+  }
+
+ .qchoices.yesno {
+    grid-template-columns: repeat(2, 1fr);
+ }
 }
+
+
