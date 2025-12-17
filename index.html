@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <title>Food Safety Culture Self-Assessment</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="page">
+             <header class="header">
+                <div class="brand">
+                    <div class="logo-box">NG</div>
+                    <div>
+                        <div class="brand-top">NOVA GNOSIS LEARNING</div>
+                        <h1>Food Safety Culture Self-Assessment</h1>
+                    </div>
+                </div>
+                <p class="sub">
+                    Please answer all questions honestly. Your score appears instantly below.
+                </p>
+                <a href="#" class="email-link" id="emailLink">Email me my results</a>
+                <div class="scorebar">
+                    <div class="scorelabel">Total Score:</div>
+                    <div class="scorevalue" id="totalScore">0</div>
+                </div>
+            </header>
+
+            <section class="meta">
+                <div class="field">
+                    <label>Name *</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="field">
+                    <label>Email *</label>
+                    <input type="email" id="email" placeholder="admin@corecompliance.biz" required>
+                </div>
+                <div class="field">
+                    <label>Trainer Name *</label>
+                    <input type="text" id="trainer" required>
+                </div>
+                 <div class="field">
+                    <label>Site *</label>
+                    <input type="text" id="site" required>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="tablehead likert-head">
+                    <div class="th-q">QUESTIONS</div>
+                    <div class="th-a">ANSWERS</div>
+
+                    <div class="th-q2"></div>
+                    <div class="likert-labels" aria-hidden="true">
+                        <span>Strongly disagree</span>
+                        <span>Disagree</span>
+                        <span>Not sure</span>
+                        <span>Agree</span>
+                        <span>Strongly Agree</span>
+                    </div>
+                </div>
+
+                <div id="questions"></div>
+            </section>
+
+            <footer class="actions">
+                <button class="btn primary" type="button" id="submitBtn">SUBMIT</button>
+                <button class="btn success" type="button" id="resetBtn">RESET</button>
+            </footer>
+        </div>
+        <script src="app.js"></script>
+    </body>
+</html>
+
+<!-- NOTES -->
+    <!-- 1. Connect to email or results collected in excel -->
+    <!-- 2. Email results -->
+    <!-- 3. QR code -->
+    <!-- 4. the last 4 questions are yes / no -->
+  
+  <!-- TESTING -->
+    <!-- 1. Does the likert tally score correctly -->
+    <!-- 2. Can you email the results to yourself. -->
+    <!-- 3. Is there a qr code -->
+    <!-- 4. Does it connect to the survery -->
+
