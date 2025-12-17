@@ -3,14 +3,14 @@ const questionsEL = document.getElementById("questions");
 const totalScoreEl = document.getElementById("totalScore");
 const emailLink = document.getElementById("emailLink");
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzoM2xrxrZzSP6HAdVrYrzT4i-UaUIiCgYhg7tTNh_N48_o-cTHND1s_1vNIcxucMMQ/exec";
-
+                   
 
 // ===== QUESTIONS =====
 const questions = [
     {id: 1, text: "Leadership actively communicates and promotes the importance of a positive food safety and quality culture."},
     {id: 2, text: "Leadership recognises and rewards those people who have embraced good practices surrounding our food safety and quality culture."},
     {id: 3, text: "How often do you perform internal food safety audits? 1 - 5 = 1 Annually to 5 Monthly"},
-    {id: 4, text: "Our organisation knows how effective our porcess are in delivering safe quality products."},
+    {id: 4, text: "Our organisation knows how effective our process are in delivering safe quality products."},
     {id: 5, text: "We track and analyse trends in food safety / quality control incidents and near misses."},
     {id: 6, text: "How often do food operators report potential / actual hazards or near misses? 5 = 1 Annually to 5 Daily."},
     {id: 7, text: "Our organisation has determined and selected opportunities to improve the suitability, adequacy and effectiveness of our food safety and quality culture."},
@@ -25,10 +25,10 @@ const questions = [
     {id: 16, text: "I am confident that all staff take communication concerning food safety and quality culture seriously, and that the content of these messages is understood by all staff."},
     {id: 17, text: "Site visitors and suppliers are required to follow site safety and quality procedures. This is always well understood and followed by these site visitors."},
     {id: 18, text: "When dealing with customer complaints and satisfaction, root cause analysis is performed appropriately."},
-    {id: 19, text: "Does your organisation have food safety and quality culture champions?"},
-    {id: 20, text: "Does a member of top management / directorship own all non-conformities picked up at audit?"},
-    {id: 21, text: "Are food safety and quality a regular permanent item on senior management meetings, and is this item always discussed (not postponed / cancelled if other items overrun)."},
-    {id: 22, text: "Do top leadership (i.e. CEO) ever walk the line and engage with where incidents / non-conformities have taken place to see that mitigating actions have been put into place to prevent recurrence?"}, 
+    {id: 19, text: "Does your organisation have food safety and quality culture champions?", type: "yesno"},
+    {id: 20, text: "Does a member of top management / directorship own all non-conformities picked up at audit?", type: "yesno"},
+    {id: 21, text: "Are food safety and quality a regular permanent item on senior management meetings, and is this item always discussed (not postponed / cancelled if other items overrun).", type: "yesno"},
+    {id: 22, text: "Do top leadership (i.e. CEO) ever walk the line and engage with where incidents / non-conformities have taken place to see that mitigating actions have been put into place to prevent recurrence?", type: "yesno"}, 
     {id: 23, text: "Leadership actively communicates and promotes the importance of a positive food safety and quality culture."},
 ];
 
@@ -40,6 +40,11 @@ const likert = [
     { label: "Not sure",  value: 3 },
     { label: "Agree",  value: 4 },
     { label: "Strongly agree", value: 5 },
+];
+
+const yesno = [
+    { label: "No", value: 1},
+    { label: "Yes", value: 5}
 ];
 
 
@@ -58,7 +63,12 @@ function render() {
         const cells = document.createElement("div");
         cells.className = "qchoices";
 
-        for(const opt of likert) {
+        if(q.type === "yesno") {
+            cells.classList.add("yesno");
+        }
+
+        const scale = q.type === "yesno" ? yesno : likert;
+        for (const opt of scale) {
             const wrap = document.createElement("label");
             wrap.className = "choice";
 
@@ -81,6 +91,14 @@ function render() {
             wrap.appendChild(dot);
             wrap.appendChild(sr);
 
+            // visible label ONLY for yes / no questions
+            if(q.type === "yesno") {
+                const vis = document.createElement("span");
+                vis.className = "choice-label";
+                vis.textContent = opt.label // "No" or "Yes"
+                wrap.appendChild(vis);
+            }
+
             cells.appendChild(wrap);
         }
 
@@ -93,23 +111,50 @@ function render() {
 
 // ===== UPDATE SCORE =====
 function updateScore () {
-    let total = 0;
+  let total = 0;
 
-    for(const q of questions) {
-        const chosen = document.querySelector(`input[name="q${q.id}"]:checked`);
-        if(chosen) total += Number(chosen.value);
+  for (const q of questions) {
+    const chosen = document.querySelector(`input[name="q${q.id}"]:checked`);
+    if (chosen) total += Number(chosen.value);
+  }
+
+  totalScoreEl.textContent = String(total);
+
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim() || "admin@corecompliance.biz";
+  const trainer = document.getElementById("trainer").value.trim();
+  const site = document.getElementById("site").value.trim();
+
+  const interpretation = getScoreMessage(total);
+
+  const subject = encodeURIComponent("Food Safety Culture Self-Assessment Results");
+  const body = encodeURIComponent(
+    `Name: ${name}\nEmail: ${email}\nTrainer: ${trainer}\nSite: ${site}\n` +
+    `Total Score: ${total}\n\n` +
+    `Interpretation:\n${interpretation}\n`
+  );
+
+  emailLink.href = `mailto:${email}?subject=${subject}&body=${body}`;
+}
+
+
+
+// ===== GET SCORE MESSAGE =====
+function getScoreMessage(score) {
+    if (score <= 40) {
+        return "0 - 40: Your organization's understanding of the importance of food safety and quality culture, and a positive implementation of this could be putting your organization at risk."
     }
-
-    totalScoreEl.textContent = String(total);
-
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim() || "admin@corecompliance.biz";
-    const trainer = document.getElementById("trainer").value.trim();
-    const site = document.getElementById("site").value.trim();
-
-    const subject = encodeURIComponent("Food Safety Culture Self-Assessment Results");
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nTotal Score: ${total}\n`);
-    emailLink.href = `mailto:${email}?subject=${subject}&body=${body}`;
+    if (score <= 59) {
+        return "41 - 59: You have an understanding, but there are clear areas for improvement of food safety and quality culture in your organization. Leadership buy in is key to achieving success see our whitepaper on food safety and quality culture."
+    }
+    if (score <= 84) {
+    return "60 - 84: You are well on your way to creating a positive quality culture in your organization, in the spirit of continual improvement, take a  look at training courses on leadership, food safety and quality systems or HACCP to see how you can take your score to the next level.";
+    }
+    if (score <= 99) {
+        return "85 - 99: You have a good understanding of the importance food safety and quality culture within your organization. Remember the importance of embedding this at every available opportunity, and try to engage all staff including senior management, shift leaders and operatives to strive for excellence.";
+    }
+  // 100–110 (and anything above, just in case)
+  return "100 - 110: Excellent job! You understand the importance of continual improvement in food safety and quality culture, commicate well at all levels and have management buy in. Be sure to share these excellent results with your customers!";
 }
 
 
@@ -132,80 +177,62 @@ document.getElementById("resetBtn").addEventListener("click", () => {
 
 // ===== SUBMIT BUTTON =====
 document.getElementById("submitBtn").addEventListener("click", async () => {
-    
-    // 1. Validate required fields
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const trainer = document.getElementById("trainer").value.trim();
-    const site = document.getElementById("site").value.trim();
-
-    if(!name || !email || !trainer || !site) {
-        alert("Please fill in Name, Email, Trainer Name, and Site.");
-        return;
-    }
-
-    // 2. Force all questions answered
-    for (const q of questions) {
-        const chosen = document.querySelector(`input[name="q${q.id}"]:checked`);
-        if(!chosen) {
-            alert(`Please answer Question ${q.id}.`);
-            return;
-        }
-    }
-
-    // 3. Build answers array Q1...q23
-    const answers = questions.map(q => {
-        const chosen = document.querySelector(`input[name="q${q.id}"]:checked`);
-        return chosen ? Number(chosen.value) : "";
-    });
-
-    // 4. Total score (already calculated on screen)
-    const totalScore = Number(totalScoreEl.textContent || 0);
+  const btn = document.getElementById("submitBtn");
+  btn.disabled = true;
+  btn.textContent = "Submitting...";
 
   const payload = {
-    name,
-    email,
-    trainer,
-    site,
-    totalScore,
-    answers
+    Timestamp: new Date().toISOString(),
+    Name: document.getElementById("name").value.trim(),
+    Email: document.getElementById("email").value.trim(),
+    Trainer: document.getElementById("trainer").value.trim(),
+    Site: document.getElementById("site").value.trim(),
+    TotalScore: Number(totalScoreEl.textContent)
   };
 
+  for (const q of questions) {
+    const chosen = document.querySelector(`input[name="q${q.id}"]:checked`);
+    payload[`Q${q.id}`] = chosen ? Number(chosen.value) : "";
+  }
 
-  // 5) Submit to Google Apps Script
   try {
-    const btn = document.getElementById("submitBtn");
-    btn.disabled = true;
-    btn.textContent = "SUBMITTING...";
-
-    const res = await fetch(SCRIPT_URL, {
+    await fetch(SCRIPT_URL, {
       method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
 
-    const json = await res.json();
+    const msg = getScoreMessage(payload.TotalScore);
 
-    if (json.ok) {
-      alert("Submitted successfully!");
+    alert(
+      `✅ Submission successful!\n\n` +
+      `Your total score: ${payload.TotalScore}\n\n` +
+      `${msg}`
+    );
 
-      // Optional: reset after submit
-      document.getElementById("resetBtn").click();
-    } else {
-      alert("Submit failed. Please try again.");
-    }
+    // reset form
+    document.querySelectorAll("input").forEach(i => {
+      if (i.type === "radio") i.checked = false;
+      else i.value = "";
+    });
 
-btn.disabled = false;
-    btn.textContent = "SUBMIT";
+    totalScoreEl.textContent = "0";
+    updateScore();
+
   } catch (err) {
-    console.error(err);
-    alert("Could not submit (internet or URL issue).");
-    const btn = document.getElementById("submitBtn");
+    alert("❌ Submission failed. Please try again.");
+  } finally {
     btn.disabled = false;
     btn.textContent = "SUBMIT";
   }
 });
 
+
+   
+
     
 render();
 updateScore();
+
+// https://script.google.com/macros/s/AKfycbzoM2xrxrZzSP6HAdVrYrzT4i-UaUIiCgYhg7tTNh_N48_o-cTHND1s_1vNIcxucMMQ/exec
