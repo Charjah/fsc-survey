@@ -18,19 +18,18 @@ const questions = [
   { id: 8, text: "Our induction process covers the importance and content of a positive food safety and quality culture very well." },
   { id: 9, text: "The internal and external issues that may impact our food safety and quality culture have been risk assessed and muitigated to a high standard." },
   { id: 10, text: "I am confident that all of our outsourced processes are controlled not to bring additional risks to the food safety and quality of our products." },
-  { id: 11, text: "Enought budget is allocated to tecnical / operational teams so that the proudction area can be maintained to a high standard, non-conformities can be remedied, potential hazards removed and all staff can be trained to a high standard." },
+  { id: 11, text: "Enough budget is allocated to technical / operational teams so that the production area can be maintained to a high standard, non-conformities can be remedied, potential hazards removed and all staff can be trained to a high standard." },
   { id: 12, text: "Accurate documented evidence is continually filled out and kept up to date, demonstrating that processes have been carried out as planned in documented policy and procedure." },
   { id: 13, text: "Operators always have adequate time to perform tasks without choosing between maintaining good food safety / quality practices and getting orders out on time." },
   { id: 14, text: "Staff at all levels are actively encouraged to suggest improvements to encourage better food safety and quality outcomes." },
   { id: 15, text: "Messages concerning food safety and quality culture are constructed well and frequently communicated across the entire organisation." },
-  { id: 16, text: "I am confident that all staff take communication concerning food safety and quality culture seriously, and that the content of these messages is understood by all staff." },
+  { id: 16, text: "I am confident that all staff take communications concerning food safety and quality culture seriously, and that the content of these messages is understood by all staff." },
   { id: 17, text: "Site visitors and suppliers are required to follow site safety and quality procedures. This is always well understood and followed by these site visitors." },
   { id: 18, text: "When dealing with customer complaints and satisfaction, root cause analysis is performed appropriately." },
   { id: 19, text: "Does your organisation have food safety and quality culture champions?", type: "yesno" },
   { id: 20, text: "Does a member of top management / directorship own all non-conformities picked up at audit?", type: "yesno" },
   { id: 21, text: "Are food safety and quality a regular permanent item on senior management meetings, and is this item always discussed (not postponed / cancelled if other items overrun).", type: "yesno" },
   { id: 22, text: "Do top leadership (i.e. CEO) ever walk the line and engage with where incidents / non-conformities have taken place to see that mitigating actions have been put into place to prevent recurrence?", type: "yesno" },
-  { id: 23, text: "Leadership actively communicates and promotes the importance of a positive food safety and quality culture." }
 ];
 
 // ===== SCALES =====
