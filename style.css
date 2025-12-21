@@ -26,7 +26,7 @@ body {
 
 /* ===== HEADER & LOGO ===== */
 .header {
-    background-color: linear-gradient(180deg, var(--soft), #ffffff);
+    background: linear-gradient(180deg, var(--soft), #ffffff);
     border: 1px solid #d6e7ff;
     border-radius: 18px;
     padding: 18px 18px 14px;
@@ -142,9 +142,14 @@ h1 {
 /* ===== USER DETAIL SETTINGS ===== */
 .meta {
     margin: 8px 0 0;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
+}
+
+.meta .field {
+    flex: 1 1 200px;
+    min-width: 200px;
 }
 
 .field label {
@@ -484,5 +489,9 @@ h1 {
     }
     .brand-logo {
         font-size: 18px;
+    }
+    .meta {
+        flex: 1 1 240px;
+        min-width: 160px;
     }
 }

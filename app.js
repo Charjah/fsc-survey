@@ -16,7 +16,7 @@ const questions = [
   { id: 6, text: "How often do food operators report potential / actual hazards or near misses? 5 = 1 Annually to 5 Daily." },
   { id: 7, text: "Our organisation has determined and selected opportunities to improve the suitability, adequacy and effectiveness of our food safety and quality culture." },
   { id: 8, text: "Our induction process covers the importance and content of a positive food safety and quality culture very well." },
-  { id: 9, text: "The internal and external issues that may impact our food safety and quality culture have been risk assessed and muitigated to a high standard." },
+  { id: 9, text: "The internal and external issues that may impact our food safety and quality culture have been risk assessed and mitigated to a high standard." },
   { id: 10, text: "I am confident that all of our outsourced processes are controlled not to bring additional risks to the food safety and quality of our products." },
   { id: 11, text: "Enough budget is allocated to technical / operational teams so that the production area can be maintained to a high standard, non-conformities can be remedied, potential hazards removed and all staff can be trained to a high standard." },
   { id: 12, text: "Accurate documented evidence is continually filled out and kept up to date, demonstrating that processes have been carried out as planned in documented policy and procedure." },
@@ -208,7 +208,7 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
     totalScoreEl.textContent = "0";
     updateScore();
   } catch (err) {
-    alert("❌ Submission failed. Please try again.");
+      alert("❌ Submission failed. Please try again.");
   } finally {
     btn.disabled = false;
     btn.textContent = "SUBMIT";
