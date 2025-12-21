@@ -134,14 +134,13 @@ function updateScore() {
 
   const name = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim() || "admin@corecompliance.biz";
-  const trainer = document.getElementById("trainer").value.trim();
   const site = document.getElementById("site").value.trim();
 
   const interpretation = getScoreMessage(total);
 
   const subject = encodeURIComponent("Food Safety Culture Self-Assessment Results");
   const body = encodeURIComponent(
-    `Name: ${name}\nEmail: ${email}\nTrainer: ${trainer}\nSite: ${site}\n` +
+    `Name: ${name}\nEmail: ${email}\nSite: ${site}\n` +
     `Total Score: ${total}\n\n` +
     `Interpretation:\n${interpretation}\n`
   );
@@ -176,7 +175,7 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
     Timestamp: new Date().toISOString(),
     Name: document.getElementById("name").value.trim(),
     Email: document.getElementById("email").value.trim(),
-    Trainer: document.getElementById("trainer").value.trim(),
+    // Trainer: document.getElementById("trainer").value.trim(),
     Site: document.getElementById("site").value.trim(),
     TotalScore: Number(totalScoreEl.textContent)
   };
