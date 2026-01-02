@@ -10,10 +10,15 @@ const SCRIPT_URL =
 const questions = [
   { id: 1, text: "Leadership actively communicates and promotes the importance of a positive food safety and quality culture." },
   { id: 2, text: "Leadership recognises and rewards those people who have embraced good practices surrounding our food safety and quality culture." },
-  { id: 3, text: "How often do you perform internal food safety audits? 1 - 5 = 1 Annually to 5 Monthly" },
+  
+  // Uses frequency scale
+  { id: 3, text: "How often do you perform internal food safety audits?", scaleKey: "freqAudit" },
+  
   { id: 4, text: "Our organisation knows how effective our process are in delivering safe quality products." },
   { id: 5, text: "We track and analyse trends in food safety / quality control incidents and near misses." },
-  { id: 6, text: "How often do food operators report potential / actual hazards or near misses? 5 = 1 Annually to 5 Daily." },
+  
+  { id: 6, text: "How often do food operators report potential / actual hazards or near misses?", scaleKey: "freqHazards"},
+  
   { id: 7, text: "Our organisation has determined and selected opportunities to improve the suitability, adequacy and effectiveness of our food safety and quality culture." },
   { id: 8, text: "Our induction process covers the importance and content of a positive food safety and quality culture very well." },
   { id: 9, text: "The internal and external issues that may impact our food safety and quality culture have been risk assessed and mitigated to a high standard." },
@@ -46,6 +51,24 @@ const yesno = [
   { label: "Yes", value: 5 }
 ];
 
+const freqAudit = [
+  {label: "Annually", value: 1},
+  {label: "Every 6 months", value: 2},
+  {label: "Quarterly", value: 3},
+  {label: "Every 2 months", value: 4},
+  {label: "Monthly", value: 5}
+];
+
+const freqHazards = [
+  {label: "Annually", value: 1},
+  {label: "Quarterly", value: 2},
+  {label: "Monthly", value: 3},
+  {label: "Weekly", value: 4},
+  {label: "Daily", value: 5}
+]
+
+const scales = {likert, yesno, freqAudit, freqHazards};
+
 // ===== RENDER =====
 function render() {
   questionsEL.innerHTML = "";
@@ -62,26 +85,28 @@ function render() {
     cells.className = "qanswers";
 
     // ✅ Mobile-only Likert labels (ONLY for Likert questions)
-    if (q.type !== "yesno") {
-      const mobileScale = document.createElement("div");
-      mobileScale.className = "mobile-scale";
-      mobileScale.innerHTML = `
-        <span>Strongly<br>disagree</span>
-        <span>Disagree</span>
-        <span>Not<br>sure</span>
-        <span>Agree</span>
-        <span>Strongly<br>agree</span>
-      `;
-      cells.appendChild(mobileScale);
-    }
+    const isYesNo = q.type === "yesno";
+
+    const chosenScale = 
+      q.scaleKey ? scales[q.scaleKey]
+      : (isYesNo ? scales.yesno : scales.likert);
+
+      if (!isYesNo) {
+        const scaleLabels = document.createElement("div");
+        scaleLabels.className = "row-scale";
+
+        scaleLabels.innerHTML = chosenScale
+          .map(opt => `<span>${opt.label.replace(/\s+/, "<br>")}</span>`)
+          .join("");
+
+          cells.appendChild(scaleLabels);
+      }
 
     const choices = document.createElement("div");
     choices.className = "qchoices";
-    if (q.type === "yesno") choices.classList.add("yesno");
-
-    const scale = q.type === "yesno" ? yesno : likert;
-
-    for (const opt of scale) {
+    if(isYesNo) choices.classList.add("yesno");
+    
+    for(const opt of chosenScale) {
       const wrap = document.createElement("label");
       wrap.className = "choice";
 
@@ -103,7 +128,7 @@ function render() {
       wrap.appendChild(sr);
 
       // show text labels only for YES/NO
-      if (q.type === "yesno") {
+      if(isYesNo) {
         const vis = document.createElement("span");
         vis.className = "choice-label";
         vis.textContent = opt.label;

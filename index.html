@@ -4,7 +4,7 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width,initial-scale=1"/>
         <title>Food Safety Culture Self-Assessment</title>
-        <link rel="stylesheet" href="style.css?v=2">
+        <link rel="stylesheet" href="style.css?v=3">
     </head>
     <body>
         <div class="page">
@@ -16,7 +16,7 @@
                     
                     <div class="brand-text">
                         <h1 class="brand-title">Food Safety and Quality Culture</h1>
-                        <h2 brand-subtitle>Self-Assessment Questionnaire</h2>
+                        <h2 class="brand-subtitle">Self-Assessment Questionnaire</h2>
                     </div>
                 </div>
 
@@ -53,34 +53,22 @@
                         <div class="scorelabel">Total Score:</div>
                         <div class="scorevalue" id="totalScore">0</div>
                     </div>
-                    </section>
                 </section>
             </header>
 
             
             <!-- ===== SURVEY ===== -->
-            <section class="card">
-                    <div class="tablehead likert-head">
-                        <div class="th-q">QUESTIONS</div>
-                        <div class="th-a">ANSWERS</div>
-
-                        <div class="likert-labels" aria-hidden="true">
-                            <span>Strongly disagree</span>
-                            <span>Disagree</span>
-                            <span>Not sure</span>
-                            <span>Agree</span>
-                            <span>Strongly agree</span>
-                        </div>
-                    </div>
-                  <div id="questions"></div>
+            <section class="card" aria-label="Self assessment questions">
+                <p class="hint">Select the option that best reflects your organisation's current practice.</p>
+                <div id="questions"></div>
             </section>
 
             <footer class="actions">
                 <button class="btn primary" type="button" id="submitBtn">SUBMIT</button>
                 <button class="btn success" type="button" id="resetBtn">RESET</button>
             </footer>
-            <div class="disclaimer">BSI Food Safety and Quality Cuture Self Assessment Questionnaire accessed September 2024.</div>
+            <div class="disclaimer">BSI Food Safety and Quality Culture Self Assessment Questionnaire accessed September 2024.</div>
         </div>
-        <script src="app.js?v=2"></script>
+        <script src="app.js?v=3"></script>
     </body>
 </html>
